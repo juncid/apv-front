@@ -1,0 +1,97 @@
+.resultado .header h1 {
+    margin: 2rem;
+}
+
+.resultado .header p {
+    width: 600px;
+    font-family: Poppins, sans-serif;
+}
+
+.resultado .calcularApv .card-header {
+    padding-bottom: 0;
+}
+
+    .resultado .calcularApv .card-header p {
+        margin: 0;
+    }
+
+.resultado .calcularApv .card-body {
+    padding: 0;
+    padding-bottom: 1rem;
+}
+
+    .resultado .calcularApv .card-body input {
+        height: 53px;
+        width: 261px;
+        background-color: #ffffff;
+    }
+
+        .resultado .calcularApv .card-body input label {
+            transform: translate(5px, -1.7rem);
+        }
+
+.resultado .calcularApv small {
+    font-size: 14px !important;
+}
+
+.resultado .card label {
+    font-size: 18px;
+    line-height: 120%;
+}
+
+.resultado .card a {
+    font-family: Poppins, sans-serif;
+}
+
+.resultado .btn {
+    margin-top: 3rem;
+}
+
+.resultado .dudas {
+    margin-top: 10rem;
+}
+
+.resultado .ctas {
+    margin: auto;
+    margin-top: 4rem;
+}
+
+    .resultado .ctas .container .btn {
+        margin-top: 1rem;
+        height: 60px;
+        width: 360px;
+    }
+
+.resultado #calcular {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+@media (max-width: 36em) {
+    .resultado .header {
+        padding: 0;
+        margin: 0 1.5rem;
+    }
+
+        .resultado .header p {
+            width: 360px;
+            text-align: left;
+        }
+
+    .resultado .volver {
+        font-size: 14px;
+    }
+
+    .resultado .calcularApv {
+        margin: 1.5rem 0;
+    }
+
+        .resultado .calcularApv .detalle small {
+            margin: 1.5rem 0;
+        }
+
+    .resultado .ctas .container {
+        margin: 1.5rem 0;
+    }
+}
