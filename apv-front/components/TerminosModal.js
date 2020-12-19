@@ -2,6 +2,17 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
 export default function TerminosModal(props) {
+
+    const aacento = "\u00e1";
+    const eacento = "\u00e9";
+    const iacento = "\u00ed";
+    const oacento = "\u00f3";
+    const uacento = "\u00fa";
+    const enhe = '\u00f1';
+    const interrogacion = '\u00BF';
+    const comillaIzquierda = '\u201C';
+    const comillaDerecha = '\u201D';
+
     return (
         <div>
             <Modal
@@ -12,19 +23,19 @@ export default function TerminosModal(props) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Términos y condiciones del servicio.
+                        T{eacento}rminos y condiciones del servicio.
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <p>
-                        Al hacer click en el botón “calcular” acepto enviar los datos solicitados en
-                        el formulario, para contacto posterior tanto a través de medio digitales,
-                        envío de correo electrónico y/o contacto telefónico con el objetivo de
-                        informar o asistirme en el proceso de suscripción de servicios por parte de
+                        Al hacer click en el bot{oacento}n {comillaIzquierda}calcular{comillaDerecha} acepto enviar los datos solicitados en
+                        el formulario, para contacto posterior tanto a trav{eacento}s de medio digitales,
+                        env{iacento}o de correo electr{oacento}nico y/o contacto telef{oacento}nico con el objetivo de
+                        informar o asistirme en el proceso de suscripci{oacento}n de servicios por parte de
                         AFP Modelo.
                     </p>
                     <p>
-                        Esta información no será utilizada con un fin diferente al indicado ni
+                        Esta informaci{oacento}n no ser{aacento} utilizada con un fin diferente al indicado ni
                         compartida con otras empresas con otros fines diferentes al expresamente
                         autorizado.
                     </p>

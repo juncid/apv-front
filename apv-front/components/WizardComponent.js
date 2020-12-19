@@ -2,11 +2,23 @@ import React, { useState } from "react";
 import { Form, Formik } from "formik";
 import joven2 from "../public/assets/svg/joven2.svg"
 import Stepper from 'react-stepper-horizontal';
+import { formatearRut } from "../utils/validationRut";
+import { cleanDigitos } from "../utils/cleanInputMask";
 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
 export const Wizard = ({ children, initialValues, onSubmit }) => {
+
+    const aacento = "\u00e1";
+    const eacento = "\u00e9";
+    const iacento = "\u00ed";
+    const oacento = "\u00f3";
+    const uacento = "\u00fa";
+    const enhe = '\u00f1';
+    const interrogacion = '\u00BF';
+    const comillaIzquierda = '\u201C';
+    const comillaDerecha = '\u201D';
 
 
     const [stepNumber, setStepNumber] = useState(0);
@@ -50,7 +62,7 @@ export const Wizard = ({ children, initialValues, onSubmit }) => {
                         />
                     </div>
                     <div className="card-body">
-                        <p>Conoce cuál régimen te entrega más beneficios:</p>
+                        <p>Conoce cu{aacento}l r{eacento}gimen te entrega m{aacento}s beneficios:</p>
                         <Formik
                             initialValues={snapshot}
                             onSubmit={handleSubmit}
@@ -66,6 +78,7 @@ export const Wizard = ({ children, initialValues, onSubmit }) => {
                                                 id={stepNumber > 0 ? (stepNumber > 1 ? 'P3_lead' : 'P2_datos_personales') : 'P1_ingreso_renta_aporte'}
                                                 className="btn btn-lg btn-block purple"
                                                 disabled={!(formik.isValid && formik.dirty)}
+                                                
                                             >
                                                 {stepNumber > 0 ? (stepNumber > 1 ? 'Calcular' : 'Continuar') : 'Comenzar'}
                                             </button>

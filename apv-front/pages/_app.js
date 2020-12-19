@@ -9,8 +9,23 @@ import React from "react";
 import { Provider } from 'react-redux';
 import { createWrapper } from "next-redux-wrapper";
 import store from "../store/store";
+import TagManager from 'react-gtm-module'
+import { useEffect } from 'react';
+
 
 function MyApp({ Component, pageProps }) {
+
+    useEffect(() => {
+        const tagManagerArgs = {
+            gtmId: 'GTM-NCT4WV5'
+        }
+
+        if (process.browser) {
+            TagManager.initialize(tagManagerArgs);
+        }
+        
+    });
+
     return (
         <Provider store={store}>
             <Layout>

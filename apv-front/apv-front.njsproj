@@ -30,10 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".env.local">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include=".env.production">
+    <Content Include=".env">
       <SubType>Code</SubType>
     </Content>
     <Content Include="components\ApvForm.js">
@@ -81,8 +78,8 @@
     </Content>
     <None Include="Properties\PublishProfiles\apvmodelo - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <Content Include="public\assets\fonts\Poppins-Regular.ttf" />
-    <Content Include="public\assets\fonts\Roboto-Regular.ttf" />
+    <Content Include="public\assets\fonts\Poppins.ttf" />
+    <Content Include="public\assets\fonts\Roboto.ttf" />
     <Content Include="public\assets\img\logo.png" />
     <Content Include="public\assets\svg\ahorro.svg" />
     <Content Include="public\assets\svg\ampolleta.svg" />
@@ -122,6 +119,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="styles\solicitud.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="utils\cleanInputMask.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="utils\inputMask.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="utils\validationRut.js">

@@ -10,8 +10,22 @@ import { fetchposts } from "../store/actions/postAction";
 import { Card, Col, Table } from "react-bootstrap";
 import axios from "axios";
 import ResultadoModal from '../components/ResultadoModal';
+import MaskedInput from "react-text-mask";
+import {dineroMask} from "../utils/inputMask"
+
+
 
 export default function Resultado(props) {
+
+    const aacento = "\u00e1";
+    const eacento = "\u00e9";
+    const iacento = "\u00ed";
+    const oacento = "\u00f3";
+    const uacento = "\u00fa";
+    const enhe = '\u00f1';
+    const interrogacion = '\u00BF';
+    const comillaIzquierda = '\u201C';
+    const comillaDerecha = '\u201D';
 
     const [modalShow, setModalShow] = useState(false);
     const handleClose = () => setModalShow(false);
@@ -64,12 +78,19 @@ export default function Resultado(props) {
     const validationSchema = Yup.object({
         ahorro: Yup
             .string()
+            .transform(value => value.replace(/[^\d]/g, ''))
             .matches(/^[0-9]+$/, `Ingrese el monto en pesos que desea ahorrar desde $1.000.`)
             .test('Sueldo-validacion', `Ingrese un monto desde $1.000.`, function (value) {
                 return (value >= 1000)
             })
+            .test('Ahorro-validacion', `El monto del ahorro no puede superar al sueldo ingresado.`, function (value) {
+                const sueldo = regimenData.sueldoLiquidoConsulta !== undefined && regimenData.sueldoLiquidoConsulta;
+                return (value <= sueldo)
+            })
             .required('Por favor ingrese el monto que desea ahorrar desde $1.000.'),
     });
+
+
 
 
     const formik = useFormik({
@@ -97,11 +118,11 @@ export default function Resultado(props) {
 
         beneficio = regimenData.beneficioRegA;
         total = ahorroMensual + beneficio;
-        texto_regimen = 'En  base a tu renta mensual y el monto del aporte quieres realizar el 15% de bonificación por parte del Estado es el que más te conviene.'
+        texto_regimen = `En  base a tu renta mensual y el monto del aporte quieres realizar el 15% de bonificaci${oacento}n por parte del Estado es el que m${aacento}s te conviene.`
     } else if (recomendacionApv === 'B') {
         beneficio = regimenData.beneficioRegB;
         total = regimenData.sueldoLiquidoConApvregB;
-        texto_regimen = 'En  base a tu renta mensual y el monto del aporte quieres realizar el descuento de tu base tributaria es mayor al aporte del 15% de bonificación del régimen A.'
+        texto_regimen = `En  base a tu renta mensual y el monto del aporte quieres realizar el descuento de tu base tributaria es mayor al aporte del 15% de bonificaci${oacento}n del r${eacento}gimen A.`
     }
 
     const rutPrimero = regimenData.rut !== undefined && regimenData.rut;
@@ -137,13 +158,13 @@ export default function Resultado(props) {
     }
 
     const dudas_texto =
-        "Nuestros ejecutivos pueden asesorarte en línea o vía teléfonica. Queremos ayudarte a resolver todas tus inquietudes o darte todas las opciones para tu traspaso.";
+        `Nuestros ejecutivos pueden asesorarte en l${iacento}nea o v${iacento}a tel${eacento}fonica. Queremos ayudarte a resolver todas tus inquietudes o darte todas las opciones para tu traspaso.`;
 
     return (
         <>
             <Head>
-                <title>Ahorro Previsional Voluntario | Resultado Simulación | AFP Modelo</title>
-                <meta name="description" content="Aumenta tu sueldo líquido, pagando una menor comisión de AFP. Simula tu aumento de sueldo al cambiarte a AFP Modelo." />
+                <title>Ahorro Previsional Voluntario | Resultado Simulaci{oacento}n | AFP Modelo</title>
+                <meta name="description" content={`Aumenta tu sueldo l${iacento}quido, pagando una menor comisi${oacento}n de AFP. Simula tu aumento de sueldo al cambiarte a AFP Modelo.`} />
                 <meta name="robots" content="noindex, follow" />
             </Head>
             <section>
@@ -153,7 +174,7 @@ export default function Resultado(props) {
                             <img
                                 src={recomendacionApv === 'A' ? ChanchitoA : ChanchitoB}
                                 alt={recomendacionApv === 'A' ? "regimen A" : "regimen B"} />
-                            <h1>Te recomendamos el régimen {recomendacionApv}</h1>
+                            <h1>Te recomendamos el r{eacento}gimen {recomendacionApv}</h1>
                             <div className='d-flex justify-content-center'>
                                 <p>{texto_regimen}</p>
                             </div>
@@ -164,7 +185,7 @@ export default function Resultado(props) {
                             <Card>
                                 <Card.Body>
                                     <Card.Text>
-                                        <p>Estos son los datos de tu simulación:</p>
+                                        <p>Estos son los datos de tu simulaci{oacento}n:</p>
                                         <Table responsive
                                             className="table-borderless"
                                         >
@@ -176,7 +197,7 @@ export default function Resultado(props) {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Sueldo líquido:</td>
+                                                    <td>Sueldo l{iacento}quido:</td>
                                                     <td className="text-right">${sueldoLiquido.toLocaleString("es-CL")}</td>
                                                 </tr>
                                                 <tr>
@@ -184,18 +205,18 @@ export default function Resultado(props) {
                                                     <td className="text-right">${ahorroMensual.toLocaleString("es-CL")}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="green-tabla">{recomendacionApv === 'A' ? 'Bonificación fiscal:' : 'Descuento tributario:'}</td>
+                                                    <td className="green-tabla">{recomendacionApv === 'A' ? `Bonificaci${oacento}n fiscal:` : 'Descuento tributario:'}</td>
                                                     <td className="text-right green-tabla">${beneficio.toLocaleString("es-CL")}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>{recomendacionApv === 'A' ? 'Total ahorro:' : 'Nuevo sueldo líquido:'}</td>
+                                                    <td>{recomendacionApv === 'A' ? 'Total ahorro:' : `Nuevo sueldo l${iacento}quido:`}</td>
                                                     <td className="text-right">${total.toLocaleString("es-CL")}</td>
                                                 </tr>
                                             </tbody>
                                         </Table>
                                     </Card.Text>
                                     <div className='col-12 text-center'>
-                                        <Card.Link className='volver' onClick={handleShow}>Ver detalles de mi simulación</Card.Link>
+                                        <Card.Link className='volver' onClick={handleShow}>Ver detalles de mi simulaci{oacento}n</Card.Link>
                                     </div>
                                     <ResultadoModal
                                         show={modalShow}
@@ -218,8 +239,9 @@ export default function Resultado(props) {
                                             {(formik) => (
                                                 <Form className='form-inline'>
                                                     <div className="form-group input-wrapper d-block">
-                                                        <input
+                                                        <MaskedInput
                                                             type="text"
+                                                            mask={dineroMask}
                                                             className={`form-control form-control-lg ${formik.touched.ahorro ? (formik.errors.ahorro ? "is-invalid" : "is-valid") : ""}`}
                                                             id="ahorro"
                                                             name="ahorro"
@@ -227,12 +249,6 @@ export default function Resultado(props) {
                                                             placeholder="Ahorro Mensual"
                                                             {...formik.getFieldProps('ahorro')}
                                                         />
-                                                        <label
-                                                            htmlFor="ahorro"
-                                                            className="control-label"
-                                                        >
-                                                            Sueldo Liquido
-                                            </label>
                                                         <small
                                                             id="ahorroAyuda"
                                                             className={`form-text ${formik.touched.ahorro && formik.errors.ahorro && 'is-invalid'}`}
@@ -259,19 +275,19 @@ export default function Resultado(props) {
                                 </Card>
                             </div>
                             <div className="row detalle">
-                                <small>*Renta tributable contempla descuentos legales, ahorro al fondo de pensiones (10%), comisión AFP Modelo (0,77%) y salud (7%).**Bonificación fiscal de un 15% de tu ahorro voluntario mensual con un tope de 6 UTM anuales.</small>
+                                <small>*Renta tributable contempla descuentos legales, ahorro al fondo de pensiones (10%), comisi{oacento}n AFP Modelo (0,77%) y salud (7%).**Bonificaci{oacento}n fiscal de un 15% de tu ahorro voluntario mensual con un tope de 6 UTM anuales.</small>
                             </div>
                         </div>
                     </div>
                     <div className='row ctas'>
                         <div className="col-md-4 text-center d-block offset-md-2 container">
-                            <p>¿Eres afiliado? Haz login para comenzar tu proceso de apertura</p>
+                            <p>{interrogacion}Eres afiliado? Haz login para comenzar tu proceso de apertura</p>
                             <div className='d-flex justify-content-center'>
                                 <button type="button" id="Apertura_Afiliado" className="btn btn-lg btn-block">Abrir mi APV</button>
                             </div>
                         </div>
                         <div className="col-md-5 text-center d-block container">
-                            <p>¿No eres afiliado? Nuestros ejecutivos te contactaran para asesorarte en la apertura.</p>
+                            <p>{interrogacion}No eres afiliado? Nuestros ejecutivos te contactaran para asesorarte en la apertura.</p>
                             <div className='d-flex justify-content-center'>
                                 <button type="button" id="Apertura_no_Afiliado" className="btn btn-lg btn-block blueBtn">Solicitar contacto</button>
                             </div>
@@ -284,7 +300,7 @@ export default function Resultado(props) {
                         <div className="col-sm-12 col-md-6 offset-md-2 d-flex flex-column contenedor">
                             <div className="txtDesktop parrafo2">
                                 <div className="container-title">
-                                    <h2>¿Aún tienes dudas?</h2>
+                                    <h2>{interrogacion}A{uacento}n tienes dudas?</h2>
                                     <p>{dudas_texto}</p>
                                     <button type="button" id="Solicitud_Contacto" className="btn btn-lg btn-block whiteBtn" onClick={contactarme}>Quiero que me contacten</button>
                                 </div>

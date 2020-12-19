@@ -5,6 +5,9 @@ import { Wizard, WizardStep } from "./WizardComponent";
 import { Step1Schema, Step2Schema, Step3Schema } from "../utils/validationSchemaWizard";
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import MaskedInput from "react-text-mask";
+import { celularMask, dineroMask, rutMask } from "../utils/inputMask"
+import { cleanDigitos, cleanRut } from "../utils/cleanInputMask"
 
 const APVForm = (props) => {
 
@@ -13,8 +16,10 @@ const APVForm = (props) => {
     const iacento = "\u00ed";
     const oacento = "\u00f3";
     const uacento = "\u00fa";
+    const enhe = '\u00f1';
+    const interrogacion = '\u00BF';
 
-    const router = useRouter();
+    const router = useRouter()
 
     const initialValues = {
         nombre: '',
@@ -23,7 +28,7 @@ const APVForm = (props) => {
         celular: '',
         sueldo: '',
         ahorro: '',
-        terminosycondiciones: false
+        terminosycondiciones: false,
     };
 
     const [modalShow, setModalShow] = useState(false);
@@ -40,15 +45,15 @@ const APVForm = (props) => {
                         "Authorization": `Bearer ${props.token}`
                     };
 
-                    const url = 'https://apvbackendmanager.azurewebsites.net/ApvSimulacion/ingresarsimulacion';
+                    const url = `${props.urlPostSimulacion}`;
 
                     const body = {
                         nombre: values.nombre,
-                        rut: values.rut,
+                        rut: cleanRut(values.rut),
                         correo: values.correo,
-                        celular: values.celular,
-                        sueldo: values.sueldo,
-                        ahorro: values.ahorro
+                        celular: cleanDigitos(values.celular),
+                        sueldo: cleanDigitos(values.sueldo),
+                        ahorro: cleanDigitos(values.ahorro)
                     };
 
                     axios
@@ -60,7 +65,6 @@ const APVForm = (props) => {
                             if (data.idSimulacion) {
                                 router.push({
                                     pathname: "/resultado",
-                                    as: "resultado/",
                                     query: {
                                         id: data.idSimulacion,
                                     },
@@ -70,12 +74,14 @@ const APVForm = (props) => {
                         .catch(e => {
                             console.log(e);
                         });
+                        
                 }}
             >
                 <WizardStep
                     onSubmit={() => console.log('Step1 onSubmit')}
                     validationSchema={Step1Schema}
                 >
+                   
                     <div className="form-group input-wrapper">
                         <label
                             htmlFor="sueldo"
@@ -88,15 +94,14 @@ const APVForm = (props) => {
                                 form: { touched, errors },
                             }) => (
                                     <>
-                                        <input
-                                            type="text"
+                                        <MaskedInput
                                             {...field}
-                                            className={
-                                                `form-control form-control-lg 
-                                            ${touched.sueldo ? (errors.sueldo ? "is-invalid" : "is-valid") : ""}`}
+                                            type="text"
+                                            mask={dineroMask}
+                                            className={`form-control form-control-lg ${touched.sueldo ? (errors.sueldo ? "is-invalid" : "is-valid") : ""}`}
                                             id="sueldo"
                                             aria-describedby="sueldoAyuda"
-                                            placeholder="Sueldo Líquido"
+                                            placeholder={`Sueldo L${iacento}quido`}
                                         />
                                         <small
                                             id="sueldoAyuda"
@@ -105,7 +110,7 @@ const APVForm = (props) => {
                                         >
                                             {touched.sueldo && errors.sueldo
                                                 ? errors.sueldo
-                                                : "El sueldo líquido que recibes luego de los descuentos legales."}
+                                                : `El sueldo l${iacento}quido que recibes luego de los descuentos legales.`}
                                         </small>
                                     </>
                                 )}
@@ -124,9 +129,10 @@ const APVForm = (props) => {
                                 form: { touched, errors },
                             }) => (
                                     <>
-                                        <input
+                                        <MaskedInput
                                             {...field}
                                             type="text"
+                                            mask={dineroMask}
                                             className={`form-control form-control-lg ${touched.ahorro ? (errors.ahorro ? "is-invalid" : "is-valid") : ""}`}
                                             id="ahorro"
                                             aria-describedby="ahorroAyuda"
@@ -138,7 +144,7 @@ const APVForm = (props) => {
                                         >
                                             {touched.ahorro && errors.ahorro
                                                 ? errors.ahorro
-                                                : "El monto en pesos que invertirías en tu APV."}
+                                                : `El monto en pesos que invertir${iacento}as en tu APV.`}
                                         </small>
                                     </>
                                 )}
@@ -196,9 +202,10 @@ const APVForm = (props) => {
                                 form: { touched, errors },
                             }) => (
                                     <>
-                                        <input
+                                        <MaskedInput
                                             {...field}
                                             type="text"
+                                            mask={rutMask}
                                             className={`form-control form-control-lg ${touched.rut ? (errors.rut ? "is-invalid" : "is-valid") : ""}`}
                                             id="rut"
                                             aria-describedby="rutAyuda"
@@ -210,7 +217,7 @@ const APVForm = (props) => {
                                         >
                                             {touched.rut && errors.rut
                                                 ? errors.rut
-                                                : "Ej. 12345678-9."}
+                                                : "Ej. 12.345.678-9."}
                                         </small>
                                     </>
                                 )}
@@ -268,19 +275,21 @@ const APVForm = (props) => {
                                 form: { touched, errors },
                             }) => (
                                     <>
-                                        <input
+                                        <MaskedInput
                                             {...field}
                                             type="text"
-                                            className={`form-control form-control-lg ${touched.celular ? (errors.celular ? "is-invalid" : "is-valid") : ""}`}
+                                            mask={celularMask}
+                                            className={`form-control form-control-lg ${touched.celular ? (errors.celular ? "is-invalid" : "is-valid") : ""}`}                                            
                                             id="celular"
                                             aria-describedby="celularAyuda"
-                                            placeholder="Celular"
+                                            placeholder={`9 ____ ____`}
                                         />
+                                      
                                         <small
                                             id="celularAyuda"
                                             className={`form-text ${touched.celular && errors.celular && "is-invalid"}`}
                                         >
-                                            {touched.celular && errors.celular ? errors.celular : "Ej. 9111223XX"}
+                                            {touched.celular && errors.celular ? errors.celular : "Ej. 9 1112 23XX"}
                                         </small>
                                     </>
                                 )}

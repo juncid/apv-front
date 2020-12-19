@@ -1,1 +1,0 @@
-{"ast":null,"code":"export const GET_POSTS = 'GET_POSTS';","map":{"version":3,"sources":["C:/Users/juanc/source/repos/apv-front/apv-front/store/types.js"],"names":["GET_POSTS"],"mappings":"AAAA,OAAO,MAAMA,SAAS,GAAG,WAAlB","sourcesContent":["export const GET_POSTS = 'GET_POSTS';"]},"metadata":{},"sourceType":"module"}

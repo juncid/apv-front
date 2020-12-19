@@ -20,6 +20,17 @@ export default function ResultadosModal(props) {
     const sueldoLiquidoConApvregA = props.data.sueldoLiquidoConApvregA !== undefined && props.data.sueldoLiquidoConApvregA.toLocaleString("es-CL");
     const sueldoLiquidoConApvregB = props.data.sueldoLiquidoConApvregB !== undefined && props.data.sueldoLiquidoConApvregB.toLocaleString("es-CL");
 
+
+    const aacento = "\u00e1";
+    const eacento = "\u00e9";
+    const iacento = "\u00ed";
+    const oacento = "\u00f3";
+    const uacento = "\u00fa";
+    const enhe = '\u00f1';
+    const interrogacion = '\u00BF';
+    const comillaIzquierda = '\u201C';
+    const comillaDerecha = '\u201D';
+
     return (
         <div>
             <Modal
@@ -30,7 +41,7 @@ export default function ResultadosModal(props) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Estos son los datos de tu simulación:
+                        Estos son los datos de tu simulaci{oacento}n:
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -40,13 +51,13 @@ export default function ResultadosModal(props) {
                         <thead>
                             <tr>
                                 <th></th>
-                                <th className="text-right">APV Régimen A</th>
-                                <th className="text-right">APV Régimen B</th>
+                                <th className="text-right">APV R{eacento}gimen A</th>
+                                <th className="text-right">APV R{eacento}gimen B</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Sueldo líquido:</td>
+                                <td>Sueldo l{iacento}quido:</td>
                                 <td className="text-right">${sueldoLiquido}</td>
                                 <td className="text-right">${sueldoLiquido}</td>
                             </tr>
@@ -81,7 +92,7 @@ export default function ResultadosModal(props) {
                                 <td className="text-right">${impSegCatApvregB}</td>
                             </tr>
                             <tr>
-                                <td className="green-tabla">Bonificación fiscal:</td>
+                                <td className="green-tabla">Bonificaci{oacento}n fiscal:</td>
                                 <td className="text-right green-tabla">${beneficioRegA}</td>
                                 <td className="text-right green-tabla">$0</td>
                             </tr>
@@ -91,13 +102,13 @@ export default function ResultadosModal(props) {
                                 <td className="text-right green-tabla">${beneficioRegB}</td>
                             </tr>
                             <tr>
-                                <td>Nuevo sueldo líquido:</td>
+                                <td>Nuevo sueldo l{iacento}quido:</td>
                                 <td className="text-right">${sueldoLiquidoConApvregA}</td>
                                 <td className="text-right">${sueldoLiquidoConApvregB}</td>
                             </tr>
                         </tbody>
                     </Table>
-                    <p className="disclaimer-modal">Calculos contemplados en modalidad de ahorro mensual a través de mandato de descuento vía empleador con un tope máximo de 50UF de ahorro mensual.*Descuentos legales corresponden a: Ahorro al fondo de pensiones (10%), cotización de salud (7%) y comisión AFP Modelo (0,77%).**Renta tributable corresponde a tu renta después de pagar los descuentos legales.</p>
+                    <p className="disclaimer-modal">Calculos contemplados en modalidad de ahorro mensual a trav{eacento}s de mandato de descuento v{iacento}a empleador con un tope m{aacento}ximo de 50UF de ahorro mensual.*Descuentos legales corresponden a: Ahorro al fondo de pensiones (10%), cotizaci{oacento}n de salud (7%) y comisi{oacento}n AFP Modelo (0,77%).**Renta tributable corresponde a tu renta despu{eacento}s de pagar los descuentos legales.</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={props.onHide}>Cerrar</Button>

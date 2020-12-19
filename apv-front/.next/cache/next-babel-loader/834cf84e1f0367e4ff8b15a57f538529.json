@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { combineReducers } from \"redux\";\nimport { postReducer } from \"./postReducer\";\nexport default combineReducers({\n  post: postReducer\n});","map":null,"metadata":{},"sourceType":"module"}

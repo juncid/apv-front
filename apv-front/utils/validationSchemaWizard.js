@@ -11,6 +11,7 @@ const uacento = "\u00fa";
 export const Step1Schema = Yup.object({
     sueldo: Yup
         .string()
+        .transform(value => value.replace(/[^\d]/g, ''))
         .matches(/^[0-9]{6,8}$/, `Ingrese un sueldo l${iacento}quido entre $100.000 y $10.000.000.`)
         .test('Sueldo-validacion', `Ingrese un sueldo l${iacento}quido entre $100.000 y $10.000.000.`, function (value) {
             return (value >= 100000 && value <= 10000000)
@@ -18,8 +19,10 @@ export const Step1Schema = Yup.object({
         .required('Por favor ingrese su sueldo líquido.'),
     ahorro: Yup
         .string()
+        .transform(value => value.replace(/[^\d]/g, ''))
         .matches(/^[0-9]+$/, `Ingrese el monto en pesos que desea ahorrar desde $1.000.`)
         .test('Sueldo-validacion', `Ingrese un monto desde $1.000.`, function (value) {
+            console.log(value);
             return (value >= 1000)
         })
         .required('Por favor ingrese el monto que desea ahorrar desde $1.000.'),
@@ -34,9 +37,9 @@ export const Step2Schema = Yup.object({
         .required('Ingresa al menos un nombre y apellido.'),
     rut: Yup
         .string()
-        .required(`Por favor ingrese un RUT v${aacento}lido sin puntos y con gui${oacento}n.`)
+        .required(`Por favor ingrese un RUT v${aacento}lido con puntos y gui${oacento}n.`)
         .test('Rut-validacion',
-            `Por favor ingrese un RUT v${aacento}lido sin puntos y con gui${oacento}n.`,
+            `Por favor ingrese un RUT v${aacento}lido con puntos y gui${oacento}n.`,
             function (value) {
                 return rutValidador(value);
             }),
@@ -49,6 +52,7 @@ export const Step3Schema = Yup.object({
         .required('Por favor ingrese su correo.'),
     celular: Yup
         .string()
+        .transform(value => value.replace(/[^\d]/g, ''))
         .matches(/^[9]{1}[0-9]{8}$/, `Ingresa un n${uacento}mero de 9 d${iacento}gitos.`)
         .required(`Por favor ingrese su n${uacento}mero de tel${eacento}fono.`),
     terminosycondiciones: Yup
