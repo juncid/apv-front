@@ -61,14 +61,6 @@ const Preguntas = () => {
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
-                    <Card>
-                        <Accordion.Toggle as={Card.Header} eventKey="3">
-                            {interrogacion}Que es un APV 2?
-                        </Accordion.Toggle>
-                        <Accordion.Collapse eventKey="3">
-                            <Card.Body>Hello! I'm another body</Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
                 </Accordion>
             </div>
         </section>

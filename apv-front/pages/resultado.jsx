@@ -27,6 +27,10 @@ export default function Resultado(props) {
     const comillaIzquierda = '\u201C';
     const comillaDerecha = '\u201D';
 
+    const headers = {
+        "Content-Type": "application/json"
+    };
+
     const [modalShow, setModalShow] = useState(false);
     const handleClose = () => setModalShow(false);
     const handleShow = () => setModalShow(true);
@@ -35,6 +39,7 @@ export default function Resultado(props) {
     const initialValues = {
         ahorro: ''
     }
+
 
     const handleSubmit = values => {
 
@@ -45,11 +50,6 @@ export default function Resultado(props) {
         const correo = regimenData.correo !== undefined && regimenData.correo;
         const celular = regimenData.celular !== undefined && regimenData.celular;
         const sueldo = regimenData.sueldoLiquidoConsulta !== undefined && regimenData.sueldoLiquidoConsulta;
-
-
-        const headers = {
-            "Content-Type": "application/json"
-        };
 
         const body = {
             nombre: nombre,
@@ -139,10 +139,7 @@ export default function Resultado(props) {
 
     function contactarme() {
 
-        const headers = {
-            "Content-Type": "application/json"
-        };
-        body_eventos.Evento_id = 2;
+        body_eventos.EventoId = 2;
         axios
             .post(props.urlIngresarEvento, body_eventos, { headers: headers })
             .then((response) => {
@@ -150,6 +147,23 @@ export default function Resultado(props) {
 
                 if (data) {
                     window.location.href = "/solicitud";
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
+    function apertura_afiliado() {
+        body_eventos.EventoId = 6;
+
+        axios
+            .post(props.urlIngresarEvento, body_eventos, { headers: headers })
+            .then((response) => {
+                let data = response.data;
+
+                if (data) {
+                    window.location.href = "https://www.afpmodelo.cl/Portal-Afiliado/Operaciones/Ahorro-Previsional-Voluntario/Mi-APV/Abrir-un-APV-Paso1.aspx?acceder&utm_source=QueAPVConviene&utm_medium=referal&utm_campaign=QueAPVConviene&utm_content=BotonAccion";
                 }
             })
             .catch(e => {
@@ -283,7 +297,12 @@ export default function Resultado(props) {
                         <div className="col-md-4 text-center d-block offset-md-2 container">
                             <p>{interrogacion}Eres afiliado? Haz login para comenzar tu proceso de apertura</p>
                             <div className='d-flex justify-content-center'>
-                                <button type="button" id="Apertura_Afiliado" className="btn btn-lg btn-block">Abrir mi APV</button>
+                                <button
+                                    type="button"
+                                    id="Apertura_Afiliado"
+                                    className="btn btn-lg btn-block"
+                                    onClick={apertura_afiliado}
+                                >Abrir mi APV</button>
                             </div>
                         </div>
                         <div className="col-md-5 text-center d-block container">

@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
         const tagManagerArgs = {
-            gtmId: 'GTM-NCT4WV5'
+            gtmId: process.env.NEXT_PUBLIC_GTM_ID
         }
 
         if (process.browser) {

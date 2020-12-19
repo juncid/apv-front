@@ -2,10 +2,14 @@
   "name": "apv-front",
   "version": "0.1.0",
   "description": "apv-front",
+  "main":  "server.js",
   "scripts": {
     "dev": "node server.js",
+    "export": "npm run build && next export",
     "build": "next build",
-    "start": "next start --port ${PORT:-3000}"
+    "postinstall": "next build",
+    "start": "next start --port ${PORT:-3000}",
+    "start-prod": "npm run build && cross-env NODE_ENV=production node server.js"
   },
   "engines": {
     "node": "~6.10.x"
