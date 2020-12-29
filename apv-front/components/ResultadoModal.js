@@ -78,8 +78,8 @@ export default function ResultadosModal(props) {
                             </tr>
                             <tr>
                                 <td>Tasa de impuestos:</td>
-                                <td className="text-right">{tasaImpuestoSegCat}%</td>
-                                <td className="text-right">{tasaImpuestoSegCat}%</td>
+                                <td className="text-right">{tasaImpuestoSegCat * 100}%</td>
+                                <td className="text-right">{tasaImpuestoSegCat * 100}%</td>
                             </tr>
                             <tr>
                                 <td>Impuestos sin APV:</td>

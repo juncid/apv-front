@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import Head from "next/head";
-import mujerSAC from "../public/assets/svg/mujersac.svg"
-import ChanchitoA from "../public/assets/svg/chanchitoa.svg";
-import ChanchitoB from "../public/assets/svg/chanchitob.svg"
-import { Formik, useFormik, Form } from "formik";
-import * as Yup from 'yup';
-import { useDispatch, useSelector } from "react-redux";
-import { fetchposts } from "../store/actions/postAction";
-import { Card, Col, Table } from "react-bootstrap";
 import axios from "axios";
-import ResultadoModal from '../components/ResultadoModal';
+import { Formik, useFormik, Form } from "formik";
+import Head from "next/head";
+import React, { useEffect, useState } from 'react';
+import { Card, Col, Table, Spinner } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import MaskedInput from "react-text-mask";
-import {dineroMask} from "../utils/inputMask"
+import * as Yup from 'yup';
+
+import ResultadoModal from '../components/ResultadoModal';
+import Loader from '../components/Loader';
+import HeaderRecomendacion from '../components/HeaderRecomendacion';
+
+import { fetchposts } from "../store/actions/postAction";
+import { dineroMask } from "../utils/inputMask"
+import { cleanDigitos } from '../utils/cleanInputMask';
+
+import mujerSAC from "../public/assets/svg/mujersac.svg"
 
 
 
@@ -32,6 +36,7 @@ export default function Resultado(props) {
     };
 
     const [modalShow, setModalShow] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const handleClose = () => setModalShow(false);
     const handleShow = () => setModalShow(true);
     const [regimenData, setRegimenData] = useState({});
@@ -42,6 +47,7 @@ export default function Resultado(props) {
 
 
     const handleSubmit = values => {
+        setIsLoading(true);
 
         const nombre = regimenData.nombre !== undefined && regimenData.nombre;
         const rutPrimero = regimenData.rut !== undefined && regimenData.rut;
@@ -51,13 +57,14 @@ export default function Resultado(props) {
         const celular = regimenData.celular !== undefined && regimenData.celular;
         const sueldo = regimenData.sueldoLiquidoConsulta !== undefined && regimenData.sueldoLiquidoConsulta;
 
+
         const body = {
             nombre: nombre,
             rut: rut,
             correo: correo,
             celular: celular,
             sueldo: sueldo,
-            ahorro: values.ahorro
+            ahorro: cleanDigitos(values.ahorro)
         };
 
         axios
@@ -68,6 +75,8 @@ export default function Resultado(props) {
                 if (data.idSimulacion) {
                     setRegimenData(data);
                 }
+
+                setIsLoading(false);
             })
             .catch(e => {
                 console.log(e);
@@ -104,25 +113,30 @@ export default function Resultado(props) {
     }, []);
 
     useEffect(() => {
+        console.log(regimenData);
     }, [regimenData]);
 
 
     const sueldoLiquido = regimenData.sueldoLiquidoConsulta !== undefined && regimenData.sueldoLiquidoConsulta;
     const ahorroMensual = regimenData.aporteApv !== undefined && regimenData.aporteApv;
-    let recomendacionApv = regimenData.recomendacionApv !== undefined && regimenData.recomendacionApv;
+    const recomendacionApv = regimenData.recomendacionApv !== undefined && regimenData.recomendacionApv;
+    const ahorroMensualRegimenA = regimenData.mixtoApvA !== undefined && Math.round(regimenData.mixtoApvA);
+    const ahorroMensualRegimenB = regimenData.mixtoApvB !== undefined && Math.round(regimenData.mixtoApvB);
+    const mixtoBeneficioApvB = regimenData.mixtoBeneficioApvB !== undefined && Math.round(regimenData.mixtoBeneficioApvB);
+    const mixtoBeneficioApvA = regimenData.mixtoBeneficioEfectivoApvA !== undefined && Math.round(regimenData.mixtoBeneficioEfectivoApvA);
+    const mixtoBeneficioTotal = regimenData.mixtoBeneficioTotal !== undefined && Math.round(regimenData.mixtoBeneficioTotal);
     let beneficio = 0;
     let total = 0;
-    let texto_regimen = '';
 
     if (recomendacionApv === 'A') {
-
         beneficio = regimenData.beneficioRegA;
         total = ahorroMensual + beneficio;
-        texto_regimen = `En  base a tu renta mensual y el monto del aporte quieres realizar el 15% de bonificaci${oacento}n por parte del Estado es el que m${aacento}s te conviene.`
     } else if (recomendacionApv === 'B') {
         beneficio = regimenData.beneficioRegB;
         total = regimenData.sueldoLiquidoConApvregB;
-        texto_regimen = `En  base a tu renta mensual y el monto del aporte quieres realizar el descuento de tu base tributaria es mayor al aporte del 15% de bonificaci${oacento}n del r${eacento}gimen A.`
+    } else if (recomendacionApv === 'M') {
+        total = (sueldoLiquido - ahorroMensualRegimenA) - (ahorroMensualRegimenB-mixtoBeneficioApvB)
+        total = Math.round(total)
     }
 
     const rutPrimero = regimenData.rut !== undefined && regimenData.rut;
@@ -139,7 +153,7 @@ export default function Resultado(props) {
 
     function contactarme() {
 
-        body_eventos.EventoId = 2;
+        body_eventos.EventoId = 8;
         axios
             .post(props.urlIngresarEvento, body_eventos, { headers: headers })
             .then((response) => {
@@ -155,7 +169,7 @@ export default function Resultado(props) {
     }
 
     function apertura_afiliado() {
-        body_eventos.EventoId = 6;
+        body_eventos.EventoId = 10;
 
         axios
             .post(props.urlIngresarEvento, body_eventos, { headers: headers })
@@ -183,60 +197,91 @@ export default function Resultado(props) {
             </Head>
             <section>
                 <div className="resultado">
-                    <div className="row">
-                        <div className="col-12 mx-auto text-center header">
-                            <img
-                                src={recomendacionApv === 'A' ? ChanchitoA : ChanchitoB}
-                                alt={recomendacionApv === 'A' ? "regimen A" : "regimen B"} />
-                            <h1>Te recomendamos el r{eacento}gimen {recomendacionApv}</h1>
-                            <div className='d-flex justify-content-center'>
-                                <p>{texto_regimen}</p>
-                            </div>
-                        </div>
-                    </div>
+                    <HeaderRecomendacion
+                        recomendacionApv={recomendacionApv}
+                    />
+                  
                     <div className="row">
                         <div className="col-md-6 offset-md-1 d-flex">
                             <Card>
                                 <Card.Body>
-                                    <Card.Text>
-                                        <p>Estos son los datos de tu simulaci{oacento}n:</p>
-                                        <Table responsive
-                                            className="table-borderless"
-                                        >
-                                            <thead>
-                                                <tr>
-                                                    <th>{''}</th>
-                                                    <th className="text-right">Regimen {recomendacionApv}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Sueldo l{iacento}quido:</td>
-                                                    <td className="text-right">${sueldoLiquido.toLocaleString("es-CL")}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Ahorro mensual:</td>
-                                                    <td className="text-right">${ahorroMensual.toLocaleString("es-CL")}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="green-tabla">{recomendacionApv === 'A' ? `Bonificaci${oacento}n fiscal:` : 'Descuento tributario:'}</td>
-                                                    <td className="text-right green-tabla">${beneficio.toLocaleString("es-CL")}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{recomendacionApv === 'A' ? 'Total ahorro:' : `Nuevo sueldo l${iacento}quido:`}</td>
-                                                    <td className="text-right">${total.toLocaleString("es-CL")}</td>
-                                                </tr>
-                                            </tbody>
-                                        </Table>
-                                    </Card.Text>
-                                    <div className='col-12 text-center'>
-                                        <Card.Link className='volver' onClick={handleShow}>Ver detalles de mi simulaci{oacento}n</Card.Link>
-                                    </div>
-                                    <ResultadoModal
-                                        show={modalShow}
-                                        onHide={handleClose}
-                                        data={regimenData !== undefined && regimenData}
-                                    />
+                                    <Card.Text>Estos son los datos de tu simulaci{oacento}n:</Card.Text>
+                                    {isLoading ?
+                                        <Loader />
+                                        : <>
+                                            <Table responsive
+                                                className="table-borderless"
+                                            >
+                                                <thead>
+                                                    <tr>
+                                                        <th>{''}</th>
+                                                        <th className="text-right">Regimen {recomendacionApv === 'M' ? 'Mixto' : recomendacionApv}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {recomendacionApv === 'M'
+                                                        ? <>
+                                                            <tr>
+                                                                <td>Sueldo l{iacento}quido:</td>
+                                                                <td className="text-right">${sueldoLiquido.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Ahorro mensual R{eacento}gimen A:</td>
+                                                                <td className="text-right">${ahorroMensualRegimenA.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Ahorro mensual R{eacento}gimen B:</td>
+                                                                <td className="text-right">${ahorroMensualRegimenB.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="green-tabla">Descuento tributario</td>
+                                                                <td className="text-right green-tabla">${mixtoBeneficioApvB.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Nuevo sueldo l{iacento}quido:</td>
+                                                                <td className="text-right">${total.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="green-tabla">Bonificaci{oacento}n fiscal:</td>
+                                                                <td className="text-right green-tabla">${mixtoBeneficioApvA.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Total Beneficios:</td>
+                                                                <td className="text-right">${mixtoBeneficioTotal.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                        </> :
+                                                        <>
+                                                            <tr>
+                                                                <td>Sueldo l{iacento}quido:</td>
+                                                                <td className="text-right">${sueldoLiquido.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Ahorro mensual:</td>
+                                                                <td className="text-right">${ahorroMensual.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="green-tabla">{recomendacionApv === 'A' ? `Bonificaci${oacento}n fiscal:` : 'Descuento tributario:'}</td>
+                                                                <td className="text-right green-tabla">${beneficio.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>{recomendacionApv === 'A' ? 'Total ahorro:' : `Nuevo sueldo l${iacento}quido:`}</td>
+                                                                <td className="text-right">${total.toLocaleString("es-CL")}</td>
+                                                            </tr>
+                                                        </>
+                                                    }
+                                                    
+                                                </tbody>
+                                            </Table>
+                                            <div className='col-12 text-center'>
+                                                <Card.Link className='volver modal-wizard' onClick={handleShow}>Ver detalles de mi simulaci{oacento}n</Card.Link>
+                                            </div>
+                                            <ResultadoModal
+                                                show={modalShow}
+                                                onHide={handleClose}
+                                                data={regimenData !== undefined && regimenData}
+                                            />
+                                        </>
+                                    }
                                 </Card.Body>
                             </Card>
                         </div>
@@ -308,7 +353,7 @@ export default function Resultado(props) {
                         <div className="col-md-5 text-center d-block container">
                             <p>{interrogacion}No eres afiliado? Nuestros ejecutivos te contactaran para asesorarte en la apertura.</p>
                             <div className='d-flex justify-content-center'>
-                                <button type="button" id="Apertura_no_Afiliado" className="btn btn-lg btn-block blueBtn">Solicitar contacto</button>
+                                <button type="button" id="Apertura_no_Afiliado" className="btn btn-lg btn-block blueBtn" onClick={contactarme}>Solicitar contacto</button>
                             </div>
                         </div>
                     </div>
@@ -338,16 +383,15 @@ export async function getServerSideProps(context) {
     const urlIngresarEvento = `${uriBackend}${process.env.URI_ENVIAR_EVENTO}`
     const { id } = context.query;
     const response = await axios
-        .get(`${uriBackend}${process.env.URI_OBTENER_SIMULACION}?id=${id}`);
+        .get(`${uriBackend}${process.env.URI_OBTENER_SIMULACION}?id=${id}`)
+        
     const data = await response.data
-    if (!data) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
-        }
+    
+    const props = {
+        data,
+        urlIngresarSimulacion,
+        urlIngresarEvento
     }
 
-    return { props: { data, urlIngresarSimulacion, urlIngresarEvento } }
+    return { props: props }
 }

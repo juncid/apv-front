@@ -22,8 +22,11 @@ export const Step1Schema = Yup.object({
         .transform(value => value.replace(/[^\d]/g, ''))
         .matches(/^[0-9]+$/, `Ingrese el monto en pesos que desea ahorrar desde $1.000.`)
         .test('Sueldo-validacion', `Ingrese un monto desde $1.000.`, function (value) {
-            console.log(value);
             return (value >= 1000)
+        })
+        .test('Ahorro-validacion', `El monto del ahorro no puede superar al sueldo ingresado.`, function (value) {
+            const sueldo = parseInt(this.parent.sueldo);
+            return (parseInt(value) <= sueldo)
         })
         .required('Por favor ingrese el monto que desea ahorrar desde $1.000.'),
 });

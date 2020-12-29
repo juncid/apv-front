@@ -1,4 +1,4 @@
-import TerminosModal from "./TerminosModal";
+
 import React, { useState, useEffect } from "react";
 import { Field } from "formik";
 import { Wizard, WizardStep } from "./WizardComponent";
@@ -30,10 +30,6 @@ const APVForm = (props) => {
         ahorro: '',
         terminosycondiciones: false,
     };
-
-    const [modalShow, setModalShow] = useState(false);
-    const handleClose = () => setModalShow(false);
-    const handleShow = () => setModalShow(true);
 
     return (
         <div className='wizardForm'>
@@ -295,52 +291,7 @@ const APVForm = (props) => {
                                 )}
                         </Field>
                     </div>
-                    <div className="form-check">
-
-                        <Field name="terminosycondiciones">
-                            {({
-                                field,
-                                form: { touched, errors },
-                            }) => (
-                                    <>
-                                        <label
-                                            className="form-check-label mt-auto"
-                                            htmlFor="terminosycondiciones"
-                                        >
-                                            <input
-                                                {...field}
-                                                type="checkbox"
-                                                className="form-check-input"
-                                            />
-                                            <small className="terminosycondiciones">
-                                                Acepto las{" "}
-                                                <a
-                                                    onClick={handleShow}
-                                                >
-                                                    condiciones del servicio y la pol{iacento}
-                                                        tica de privacidad.
-                                                    </a>
-                                            </small>
-                                        </label>
-                                        <small
-                                            id="terminosAyuda"
-                                            className={
-                                                `form-text 
-                            ${touched.terminosycondiciones && errors.terminosycondiciones
-                                                    ? 'is-invalid' : ''}`}
-                                        >
-                                            {touched.terminosycondiciones && errors.terminosycondiciones
-                                                ? errors.terminosycondiciones
-                                                : ""}
-                                        </small>
-                                        <TerminosModal
-                                            show={modalShow}
-                                            onHide={handleClose}
-                                        />
-                                    </>
-                                )}
-                        </Field>
-                    </div>
+                    
                 </WizardStep>
             </Wizard>
         </div>

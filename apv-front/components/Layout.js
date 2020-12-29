@@ -1,21 +1,18 @@
-import React, { Component } from 'react';
+import { useRouter } from 'next/router'
 import Header from "./Header";
 import Footer from "./Footer";
 import Preguntas from "./PreguntasFrecuentes";
 
 
-class Layout extends Component {
-    render() {
-        const { children } = this.props
-        return (
-            <div>
-                <Header />
-                {children}
-                <Preguntas />
-                <Footer />
-            </div>
-        );
-    }
-}
+export default function Layout({ children }) {
+    const router = useRouter();
 
-export default Layout;
+    return (
+        <div>
+            <Header />
+            {children}
+            {router.pathname !== '/solicitud' && <Preguntas />}
+            <Footer />
+        </div>
+    )
+}

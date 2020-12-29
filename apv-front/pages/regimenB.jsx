@@ -57,7 +57,7 @@ Si bien los fondos tienen como fin aportar a tu jubilaci{oacento}n, puedes hacer
                                     </p>
                                 </div>
                             </div>
-                            <Link href="/regimenA" passHref>
+                            <Link href="/regimenA" passHref shallow>
                                 <button type="button" className="btn btn-lg btn-block purple">Ver r{eacento}gimen A</button>
                             </Link>
                             <br />

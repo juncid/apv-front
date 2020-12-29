@@ -1,0 +1,9 @@
+export const aacento = "\u00e1";
+export const eacento = "\u00e9";
+export const iacento = "\u00ed";
+export const oacento = "\u00f3";
+export const uacento = "\u00fa";
+export const enhe = '\u00f1';
+export const interrogacion = '\u00BF';
+export const comillaIzquierda = '\u201C';
+export const comillaDerecha = '\u201D';

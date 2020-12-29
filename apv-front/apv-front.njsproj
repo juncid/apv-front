@@ -42,7 +42,13 @@
     <Content Include="components\Header.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="components\HeaderRecomendacion.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="components\Layout.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="components\Loader.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="components\PreguntasFrecuentes.js">
@@ -119,6 +125,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="styles\solicitud.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="utils\caracteresUTF8.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="utils\cleanInputMask.js">
