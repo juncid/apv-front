@@ -136,7 +136,7 @@ export const Wizard = ({ children, initialValues, onSubmit }) => {
                     </div>
                 </div>
             </div>
-            <div className="col-md-2 desktop">
+            <div className="col-md-2 desktop form">
                 {<img src={joven2} alt="joven modelo" />}
             </div>
         </div>

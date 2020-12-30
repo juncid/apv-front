@@ -148,7 +148,28 @@ section {
     line-height: 120%;
     color: #54575C !important;
 }
-
+/**********************MODAL**********************/
+.modal-header, .modal-footer{
+    border:none;
+}
+.modal-header{
+    padding-bottom: 0.5rem;
+}
+.modal-title{
+    margin-top:1rem;
+    color: #333333;
+}
+.modal-content p{
+    font-size: 16px;
+}
+.modal-footer{
+    display: flex;
+    justify-content: center;
+}
+.modal-footer button{
+    width: 160px;
+}
+/**********************FIN MODAL**********************/
 /**********************Formulario**********************/
 
 .form {

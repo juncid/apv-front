@@ -41,7 +41,7 @@ export default function TerminosModal(props) {
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={props.onHide}>Cerrar</Button>
+                    <button className='btn btn-lg btn-block purple' onClick={props.onHide}>Cerrar</button>
                 </Modal.Footer>
             </Modal>
         </div>
