@@ -1,20 +1,13 @@
 import Link from 'next/link';
+import Image from 'next/image'
 import Head from "next/head";
 import hombreRegimenA from "../public/assets/svg/regimena.svg";
 import React from "react";
 import arrow from "../public/assets/svg/arrow.svg";
 import backgroundMobile from "../public/assets/svg/mobiles/regimenAmobileBackground.svg";
+import {aacento,eacento,iacento,oacento,enhe} from "../utils/caracteresUTF8";
 
 export default function RegimenA() {
-    const aacento = "\u00e1";
-    const eacento = "\u00e9";
-    const iacento = "\u00ed";
-    const oacento = "\u00f3";
-    const uacento = "\u00fa";
-    const enhe = '\u00f1';
-    const interrogacion = '\u00BF';
-    const comillaIzquierda = '\u201C';
-    const comillaDerecha = '\u201D';
 
     return (
         <>
@@ -30,7 +23,7 @@ export default function RegimenA() {
                             <h1>R{eacento}gimen A</h1>
                             <h3>Bonificaci{oacento}n fiscal de un 15% de lo ahorrado.</h3>
                         </div>
-                        <img src={backgroundMobile} alt="background" className='background mobile' />
+                        <img src={backgroundMobile} alt="background" className="background mobile"/>
                     </div>
                     <div className="row">
                         <div className="col-sm-12 col-md-6 offset-md-1 d-flex flex-column contenedor">

@@ -387,7 +387,7 @@ input[type="checkbox"] + label {
     }
 
     .container-title {
-        padding: 2rem;
+        padding: 2.1rem;
     }
 
     .bloque {
@@ -444,10 +444,41 @@ input[type="checkbox"] + label {
     .volver img {
         margin: 0 !important;
     }
+
+
 }
 
-@media (max-width: 23.4em) {
-    .label-mobile-error {
-        transform: translate(5px, -25px) !important;
+@media (max-width: 25.875em) {
+    .container-title {
+        padding: 2.2rem;
     }
+}
+@media (max-width: 25.688em) {
+    .container-title {
+        padding: 2.1rem;
+    }
+}
+
+@media (max-width: 23.5em){
+    .container-title {
+        padding: 0.8rem;
+    }
+}
+
+@media (max-width: 23.43em){
+    .container-title {
+        padding: 0.4rem;
+    }
+}
+
+@media (max-width: 20em) {
+
+    .container-title {
+        padding: 0rem;
+    }
+    .calculadora .container-title p{
+        font-size: 14px !important;
+        line-height: 12px !important;
+    }
+
 }

@@ -6,6 +6,7 @@
 @media (max-width: 36em) {
     .regimenPage .background {
         left: 0;
+        width: 100%;
     }
 
     .regimenPage .parrafo {

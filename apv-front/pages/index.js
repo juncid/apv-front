@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import {aacento, eacento,iacento,oacento,uacento,enhe,interrogacion} from '../utils/caracteresUTF8'
+import Image from "next/image";
 
 export default function Home(props) {
     const router = useRouter()
@@ -96,7 +97,16 @@ export default function Home(props) {
                                 <p>El APV te permite complementar tus ahorros y/o compensar per{iacento}odos no cotizados, para mejorar tu pensi{oacento}n. Dependiendo del r{eacento}gimen tributario que elijas podr{aacento}s recibir un aporte fiscal o rebajar lo ahorrado de tu renta tributable.</p>
                             </div>
                         </div>
-                        <img src={backgroundMobile} alt="background" className='background mobile' />
+                        <div className='background mobile'>
+                            <Image
+                                src={backgroundMobile}
+                                alt="background"
+                                width={411}
+                                height={547}
+                            />
+                        </div>
+
+
                         <APVForm token={bearer} urlPostSimulacion={urlPostSimulacion} />
                     </div>
                 </section>

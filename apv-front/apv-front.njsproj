@@ -136,6 +136,9 @@
     <Content Include="utils\inputMask.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="utils\useRouterScroll.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="utils\validationRut.js">
       <SubType>Code</SubType>
     </Content>
