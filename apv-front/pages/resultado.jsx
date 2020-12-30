@@ -14,22 +14,12 @@ import HeaderRecomendacion from '../components/HeaderRecomendacion';
 import { fetchposts } from "../store/actions/postAction";
 import { dineroMask } from "../utils/inputMask"
 import { cleanDigitos } from '../utils/cleanInputMask';
+import {eacento, iacento, oacento, uacento, interrogacion} from '../utils/caracteresUTF8';
 
 import mujerSAC from "../public/assets/svg/mujersac.svg"
 
 
-
 export default function Resultado(props) {
-
-    const aacento = "\u00e1";
-    const eacento = "\u00e9";
-    const iacento = "\u00ed";
-    const oacento = "\u00f3";
-    const uacento = "\u00fa";
-    const enhe = '\u00f1';
-    const interrogacion = '\u00BF';
-    const comillaIzquierda = '\u201C';
-    const comillaDerecha = '\u201D';
 
     const headers = {
         "Content-Type": "application/json"
@@ -99,9 +89,6 @@ export default function Resultado(props) {
             .required('Por favor ingrese el monto que desea ahorrar desde $1.000.'),
     });
 
-
-
-
     const formik = useFormik({
         initialValues,
         handleSubmit,
@@ -116,7 +103,20 @@ export default function Resultado(props) {
         console.log(regimenData);
     }, [regimenData]);
 
+    let data_resultado = {
+        'sueldoLiquido': regimenData.sueldoLiquidoConsulta !== undefined && regimenData.sueldoLiquidoConsulta,
+        'ahorroMensual': regimenData.aporteApv !== undefined && regimenData.aporteApv,
+        'recomendacionApv': regimenData.recomendacionApv !== undefined && regimenData.recomendacionApv,
+        'ahorroMensualRegimenA': regimenData.mixtoApvA !== undefined && Math.round(regimenData.mixtoApvA),
+        'ahorroMensualRegimenB': regimenData.mixtoApvB !== undefined && Math.round(regimenData.mixtoApvB),
+        'mixtoBeneficioApvB': regimenData.mixtoBeneficioApvB !== undefined && Math.round(regimenData.mixtoBeneficioApvB),
+        'mixtoBeneficioApvA': regimenData.mixtoBeneficioEfectivoApvA !== undefined && Math.round(regimenData.mixtoBeneficioEfectivoApvA),
+        'mixtoBeneficioTotal': regimenData.mixtoBeneficioTotal !== undefined && Math.round(regimenData.mixtoBeneficioTotal),
+        'beneficio': 0,
+        'total':0
+    }
 
+    console.log(data_resultado);
     const sueldoLiquido = regimenData.sueldoLiquidoConsulta !== undefined && regimenData.sueldoLiquidoConsulta;
     const ahorroMensual = regimenData.aporteApv !== undefined && regimenData.aporteApv;
     const recomendacionApv = regimenData.recomendacionApv !== undefined && regimenData.recomendacionApv;

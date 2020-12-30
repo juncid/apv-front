@@ -8,17 +8,9 @@ import axios from 'axios';
 import MaskedInput from "react-text-mask";
 import { celularMask, dineroMask, rutMask } from "../utils/inputMask"
 import { cleanDigitos, cleanRut } from "../utils/cleanInputMask"
+import {iacento} from "../utils/caracteresUTF8";
 
 const APVForm = (props) => {
-
-    const aacento = "\u00e1";
-    const eacento = "\u00e9";
-    const iacento = "\u00ed";
-    const oacento = "\u00f3";
-    const uacento = "\u00fa";
-    const enhe = '\u00f1';
-    const interrogacion = '\u00BF';
-
     const router = useRouter()
 
     const initialValues = {

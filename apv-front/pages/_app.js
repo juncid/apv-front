@@ -11,6 +11,7 @@ import { createWrapper } from "next-redux-wrapper";
 import store from "../store/store";
 import TagManager from 'react-gtm-module'
 import { useEffect } from 'react';
+import useRouterScroll from "../utils/useRouterScroll";
 
 
 function MyApp({ Component, pageProps }) {
@@ -25,6 +26,8 @@ function MyApp({ Component, pageProps }) {
         }
         
     });
+
+    useRouterScroll();
 
     return (
         <Provider store={store}>

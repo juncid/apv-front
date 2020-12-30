@@ -8,19 +8,12 @@ import axios from 'axios';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
-
+import {aacento, eacento,iacento,oacento,uacento,enhe,interrogacion} from '../utils/caracteresUTF8'
 
 export default function Home(props) {
     const router = useRouter()
     const bearer = props.bearer;
     const urlPostSimulacion = props.urlPostSimulacion;
-    const aacento = '\u00e1';
-    const eacento = '\u00e9';
-    const iacento = '\u00ed';
-    const oacento = '\u00f3';
-    const uacento = '\u00fa';
-    const enhe = '\u00f1';
-    const interrogacion = '\u00BF';
 
     if (typeof window !== "undefined") {
         localStorage.setItem('sessionId', props.idSesion);
@@ -152,7 +145,8 @@ export async function getServerSideProps(context) {
     const urlGetToken = `${baseUrl}${apiToken}`;
     const urlPostSimulacion = `${baseUrl}${uriIngresarSimulacion}`;
     const rutConsultaRegimen = process.env.RUT_CONSULTA_REGIMEN;
-    const urlIngresarEvento = `${baseUrl}${process.env.URI_ENVIAR_EVENTO}`
+    const urlIngresarEvento = `${baseUrl}${process.env.URI_ENVIAR_EVENTO}`;
+    const urlDatosPrevisionales = `${baseUrl}${process.env.URI_DATOS_PREVISIONALES}`
 
     const response = await axios
         .get(urlGetToken);

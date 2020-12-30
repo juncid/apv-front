@@ -1,19 +1,8 @@
 import React from "react";
 import { Accordion, Card } from "react-bootstrap";
-
+import {aacento, eacento, iacento, oacento, enhe, interrogacion, comillaIzquierda, comillaDerecha} from "../utils/caracteresUTF8";
 
 const Preguntas = () => {
-
-    const aacento = "\u00e1";
-    const eacento = "\u00e9";
-    const iacento = "\u00ed";
-    const oacento = "\u00f3";
-    const uacento = "\u00fa";
-    const enhe = '\u00f1';
-    const interrogacion = '\u00BF';
-    const comillaIzquierda = '\u201C';
-    const comillaDerecha = '\u201D';
-
     return (
         <section>
             <div className="col-12 col-lg-10 block mx-auto justify-content-center">
