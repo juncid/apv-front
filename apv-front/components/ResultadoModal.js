@@ -83,7 +83,7 @@ export default function ResultadosModal(props) {
                             </tr>
                             <tr>
                                 <td>Impuestos sin APV:</td>
-                                <td className="text-right">$0</td>
+                                <td className="text-right">${montoImpuestoSegCat}</td>
                                 <td className="text-right">${montoImpuestoSegCat}</td>
                             </tr>
                             <tr>
