@@ -7,10 +7,12 @@
         font-size: 32px;
         line-height: 3px;
         margin: 2.5rem;
+        font-weight: bold;
+
     }
 
     .solicitud .txt p {
-        font-family: Poppins !important;
+        font-family: Poppins, sans-serif !important;
         font-size: 20px !important;
         line-height: 150% !important;
     }
@@ -38,4 +40,29 @@
         .solicitud .txt p {
             font-size: 16px !important;
         }
+}
+
+@media (max-width: 25.875em) {
+
+}
+@media (max-width: 25.688em) {
+
+}
+
+@media (max-width: 23.5em){
+
+}
+
+@media (max-width: 23.43em){
+
+}
+
+@media (max-width: 20em) {
+
+    .solicitud .txt h4 {
+        font-size: 18px;
+        margin: 0;
+        margin-bottom: 2rem;
+    }
+
 }
