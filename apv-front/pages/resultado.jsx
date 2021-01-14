@@ -116,7 +116,7 @@ export default function Resultado(props) {
         'total':0
     }
 
-    console.log(data_resultado);
+    //console.log(data_resultado);
     const sueldoLiquido = regimenData.sueldoLiquidoConsulta !== undefined && regimenData.sueldoLiquidoConsulta;
     const ahorroMensual = regimenData.aporteApv !== undefined && regimenData.aporteApv;
     const recomendacionApv = regimenData.recomendacionApv !== undefined && regimenData.recomendacionApv;
@@ -125,6 +125,7 @@ export default function Resultado(props) {
     const mixtoBeneficioApvB = regimenData.mixtoBeneficioApvB !== undefined && Math.round(regimenData.mixtoBeneficioApvB);
     const mixtoBeneficioApvA = regimenData.mixtoBeneficioEfectivoApvA !== undefined && Math.round(regimenData.mixtoBeneficioEfectivoApvA);
     const mixtoBeneficioTotal = regimenData.mixtoBeneficioTotal !== undefined && Math.round(regimenData.mixtoBeneficioTotal);
+    const mixtoSueldoLiquido = regimenData.mixtoSueldoLiquido !== undefined && Math.round(regimenData.mixtoSueldoLiquido);
     let beneficio = 0;
     let total = 0;
 
@@ -135,8 +136,7 @@ export default function Resultado(props) {
         beneficio = regimenData.beneficioRegB;
         total = regimenData.sueldoLiquidoConApvregB;
     } else if (recomendacionApv === 'M') {
-        total = (sueldoLiquido - ahorroMensualRegimenA) - (ahorroMensualRegimenB-mixtoBeneficioApvB)
-        total = Math.round(total)
+        total = Math.round(mixtoSueldoLiquido);
     }
 
     const rutPrimero = regimenData.rut !== undefined && regimenData.rut;
@@ -145,9 +145,9 @@ export default function Resultado(props) {
     const body_eventos = {
         "sessionId": "string",
         "eventoId": 0,
-        "result0": regimenData.sueldoLiquidoConApvregA !== undefined && regimenData.sueldoLiquidoConApvregA,
-        "result1": regimenData.sueldoLiquidoConApvregB !== undefined && regimenData.sueldoLiquidoConApvregB,
-        "result2": 0,
+        "result0": regimenData.sueldoLiquidoConApvregA !== undefined && parseInt(Math.round(regimenData.sueldoLiquidoConApvregA)),
+        "result1": regimenData.sueldoLiquidoConApvregB !== undefined && parseInt(Math.round(regimenData.sueldoLiquidoConApvregB)),
+        "result2": regimenData.mixtoSueldoLiquido !== undefined && parseInt(Math.round(regimenData.mixtoSueldoLiquido)),
         "rut": rut
     }
 

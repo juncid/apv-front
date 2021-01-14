@@ -30,7 +30,7 @@ const APVForm = (props) => {
                 onSubmit={values => {
                     const headers = {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${props.token}`
+                        //"Authorization": `Bearer ${props.token}`
                     };
 
                     const url = `${props.urlPostSimulacion}`;
@@ -49,7 +49,7 @@ const APVForm = (props) => {
                         .then((response) => {
                             let data = response.data;
 
-
+                            console.log("redireccionando");
                             if (data.idSimulacion) {
                                 router.push({
                                     pathname: "/resultado",

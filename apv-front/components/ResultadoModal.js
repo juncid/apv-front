@@ -1,10 +1,10 @@
 import React from "react";
 import { Modal, Button, Table } from "react-bootstrap";
+import {aacento, eacento, iacento, oacento} from "../utils/caracteresUTF8";
 
 export default function ResultadosModal(props) {
-
     const sueldoLiquido = props.data.sueldoLiquidoConsulta !== undefined && props.data.sueldoLiquidoConsulta.toLocaleString("es-CL");
-    const ahorroMensual = props.data.aporteApv !== undefined && props.data.aporteApv.toLocaleString("es-CL");
+    const recomendacionApv = props.data.recomendacionApv !== undefined && props.data.recomendacionApv;
     const aporteAfp = props.data.aporteAfp !== undefined && props.data.aporteAfp;
     const aporteIsapre = props.data.aporteIsapre !== undefined && props.data.aporteIsapre;
     const seguroCesantia = props.data.seguroCesantia !== undefined && props.data.seguroCesantia;
@@ -13,23 +13,20 @@ export default function ResultadosModal(props) {
     const rentaTributable = props.data.sueldoTributario !== undefined && Math.trunc(props.data.sueldoTributario).toLocaleString("es-CL");
     const tasaImpuestoSegCat = props.data.tasaImpuestoSegCat !== undefined && (props.data.tasaImpuestoSegCat * 1).toFixed(2);
     const montoImpuestoSegCat = props.data.montoImpuestoSegCat !== undefined && Math.trunc(props.data.montoImpuestoSegCat).toLocaleString("es-CL");
+
+    console.log(recomendacionApv);
+    const ahorroMensualA= recomendacionApv === 'M' ? props.data.mixtoApvA !== undefined &&  Math.round(props.data.mixtoApvA).toLocaleString("es-CL") : props.data.aporteApv !== undefined && props.data.aporteApv.toLocaleString("es-CL");
+    const ahorroMensualB = recomendacionApv === 'M' ? props.data.mixtoApvB !== undefined && Math.round(props.data.mixtoApvB).toLocaleString("es-CL") : props.data.aporteApv !== undefined && props.data.aporteApv.toLocaleString("es-CL");
+
+    const beneficioRegA = recomendacionApv === 'M' ? props.data.mixtoBeneficioApvA !== undefined && Math.round(props.data.mixtoBeneficioApvA).toLocaleString("es-CL") : props.data.beneficioRegA !== undefined && props.data.beneficioRegA.toLocaleString("es-CL");
+    const beneficioRegB = recomendacionApv === 'M' ? props.data.mixtoBeneficioApvB !== undefined && Math.round(props.data.mixtoBeneficioApvB).toLocaleString("es-CL") :  props.data.beneficioRegB !== undefined && props.data.beneficioRegB.toLocaleString("es-CL");
+
+ // mixtoBeneficioApvA
     const impSegCatApvregA = props.data.impSegCatApvregA !== undefined && Math.trunc(props.data.impSegCatApvregA).toLocaleString("es-CL");
     const impSegCatApvregB = props.data.impSegCatApvregB !== undefined && Math.trunc(props.data.impSegCatApvregB).toLocaleString("es-CL");
-    const beneficioRegA = props.data.beneficioRegA !== undefined && props.data.beneficioRegA.toLocaleString("es-CL");
-    const beneficioRegB = props.data.beneficioRegB !== undefined && props.data.beneficioRegB.toLocaleString("es-CL");
-    const sueldoLiquidoConApvregA = props.data.sueldoLiquidoConApvregA !== undefined && props.data.sueldoLiquidoConApvregA.toLocaleString("es-CL");
-    const sueldoLiquidoConApvregB = props.data.sueldoLiquidoConApvregB !== undefined && props.data.sueldoLiquidoConApvregB.toLocaleString("es-CL");
 
-
-    const aacento = "\u00e1";
-    const eacento = "\u00e9";
-    const iacento = "\u00ed";
-    const oacento = "\u00f3";
-    const uacento = "\u00fa";
-    const enhe = '\u00f1';
-    const interrogacion = '\u00BF';
-    const comillaIzquierda = '\u201C';
-    const comillaDerecha = '\u201D';
+    const sueldoLiquidoConApvregA = recomendacionApv === 'M' ? props.data.mixtoSueldoLiquido !== undefined && Math.round(props.data.mixtoSueldoLiquido).toLocaleString("es-CL") : props.data.sueldoLiquidoConApvregA !== undefined && Math.round(props.data.sueldoLiquidoConApvregA).toLocaleString("es-CL");
+    const sueldoLiquidoConApvregB = recomendacionApv === 'M' ? props.data.mixtoSueldoLiquido !== undefined && Math.round(props.data.mixtoSueldoLiquido).toLocaleString("es-CL") : props.data.sueldoLiquidoConApvregB !== undefined && Math.round(props.data.sueldoLiquidoConApvregB).toLocaleString("es-CL");
 
     return (
         <div>
@@ -63,8 +60,8 @@ export default function ResultadosModal(props) {
                             </tr>
                             <tr>
                                 <td>Ahorro mensual:</td>
-                                <td className="text-right">${ahorroMensual}</td>
-                                <td className="text-right">${ahorroMensual}</td>
+                                <td className="text-right">${ahorroMensualA}</td>
+                                <td className="text-right">${ahorroMensualB}</td>
                             </tr>
                             <tr>
                                 <td>Descuentos legales:</td>

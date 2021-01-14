@@ -3,21 +3,12 @@ import { Form, Formik, Field } from "formik";
 import joven2 from "../public/assets/svg/joven2.svg"
 import Stepper from 'react-stepper-horizontal';
 import TerminosModal from "./TerminosModal";
+import {aacento, eacento, iacento} from "../utils/caracteresUTF8";
 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
 export const Wizard = ({ children, initialValues, onSubmit }) => {
-
-    const aacento = "\u00e1";
-    const eacento = "\u00e9";
-    const iacento = "\u00ed";
-    const oacento = "\u00f3";
-    const uacento = "\u00fa";
-    const enhe = '\u00f1';
-    const interrogacion = '\u00BF';
-    const comillaIzquierda = '\u201C';
-    const comillaDerecha = '\u201D';
 
     const [modalShow, setModalShow] = useState(false);
     const handleClose = () => setModalShow(false);
