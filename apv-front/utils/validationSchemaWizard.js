@@ -12,11 +12,11 @@ export const Step1Schema = Yup.object({
     sueldo: Yup
         .string()
         .transform(value => value.replace(/[^\d]/g, ''))
-        .matches(/^[0-9]{6,8}$/, `Ingrese un sueldo l${iacento}quido entre $100.000 y $10.000.000.`)
-        .test('Sueldo-validacion', `Ingrese un sueldo l${iacento}quido entre $100.000 y $10.000.000.`, function (value) {
-            return (value >= 100000 && value <= 10000000)
+        .matches(/^[0-9]+$/, `Ingrese un sueldo l${iacento}quido superior a $100.000.`)
+        .test('Sueldo-validacion', `Ingrese un sueldo l${iacento}quido superior a $100.000.`, function (value) {
+            return (value >= 100000)
         })
-        .required('Por favor ingrese su sueldo líquido.'),
+        .required(`Por favor ingrese su sueldo l${iacento}quido.`),
     ahorro: Yup
         .string()
         .transform(value => value.replace(/[^\d]/g, ''))
